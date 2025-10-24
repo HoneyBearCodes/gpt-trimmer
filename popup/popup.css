@@ -18,10 +18,28 @@ body {
 .header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between; /* left and right alignment */
   gap: 8px;
   margin-bottom: 24px;
   width: 100%;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.github-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.github-logo:hover {
+  transform: scale(1.1);
 }
 
 .logo {
