@@ -12,7 +12,7 @@
   const ROOT_ID = 'gpttrimmer-root-v1';
 
   // Default number to keep; can be made configurable via chrome.storage later
-  const DEFAULT_KEEP = 20;
+  const DEFAULT_KEEP = 5;
 
   // Selector specified by the requirements
   const TURN_SELECTOR = 'article[data-testid^="conversation-turn-"]';
@@ -42,19 +42,14 @@
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display: inline-block;
       box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-      background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-      border: 1px solid rgba(0,0,0,0.08);
       cursor: pointer;
       user-select: none;
       transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
     .gpttrimmer-fab:active { transform: scale(0.96); }
     .gpttrimmer-fab:focus { outline: 3px solid rgba(0,123,255,0.25); }
-    .gpttrimmer-emoji { font-size: 20px; line-height: 1; }
     .gpttrimmer-label {
       position: absolute;
       bottom: 72px;
@@ -85,25 +80,18 @@
     display: 'inline-block'
   });
 
-  // FAB button
-  const fab = document.createElement('button');
+  const fab = document.createElement('img');
   fab.className = 'gpttrimmer-fab';
+  fab.src = chrome.runtime.getURL('icons/icon128.png');
+  fab.alt = 'Trim Chat';
   fab.setAttribute('title', 'Trim Chat (keeps last ' + DEFAULT_KEEP + ' turns)');
   fab.setAttribute('aria-label', 'Trim Chat History');
-  fab.type = 'button';
 
-  // Emoji inside fab (simple, cross-platform)
-  const emoji = document.createElement('span');
-  emoji.className = 'gpttrimmer-emoji';
-  emoji.textContent = '✂️';
-
-  // Label
   const label = document.createElement('div');
   label.className = 'gpttrimmer-label';
   label.textContent = 'Trim Chat (keep last ' + DEFAULT_KEEP + ')';
 
   // Assemble shadow DOM
-  fab.appendChild(emoji);
   container.appendChild(fab);
   container.appendChild(label);
   shadow.appendChild(style);
@@ -139,7 +127,6 @@
         transition: 'opacity 0.2s ease'
       });
       document.body.appendChild(toast);
-      // Force repaint then show
       requestAnimationFrame(() => toast.style.opacity = '1');
 
       const duration = typeof options.duration === 'number' ? options.duration : 4000;
@@ -150,7 +137,6 @@
         }, 220);
       }, duration);
     } catch (err) {
-      // As a last fallback use alert (should not normally happen)
       try { console.warn('GPTTrimmer toast error', err); } catch (e) {}
     }
   }
@@ -171,7 +157,6 @@
           return false;
         }
       } else {
-        // denied
         return false;
       }
     } catch (err) {
@@ -213,7 +198,6 @@
       const toRemove = Math.max(0, total - KEEP);
       for (let i = 0; i < toRemove; i++) {
         const node = turns[i];
-        // Check still in DOM
         if (node && node.parentElement) {
           node.remove();
           removed++;
@@ -233,7 +217,6 @@
   fab.addEventListener('click', (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
-    // Visual feedback
     fab.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.96)' }, { transform: 'scale(1)' }], { duration: 160 });
     trimConversation();
   });
@@ -246,7 +229,6 @@
     }
   });
 
-  // Optionally expose a global safe method for advanced users (only if not already present)
   try {
     if (!window.__GPTTRIMMER) {
       window.__GPTTRIMMER = {
@@ -254,9 +236,5 @@
         version: '1.0.0'
       };
     }
-  } catch (e) {
-    // ignore
-  }
-
+  } catch (e) {}
 })();
-
