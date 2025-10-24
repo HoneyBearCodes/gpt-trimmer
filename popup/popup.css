@@ -4,7 +4,7 @@ body {
   background-color: #181818;
   color: #ffffff;
   width: 280px;
-  padding: 16px;
+  padding: 16px 16px 0 16px;
   border-radius: 12px;
 }
 
@@ -18,9 +18,10 @@ body {
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
+  width: 100%;
 }
 
 .logo {
@@ -36,12 +37,6 @@ h1 {
   color: #ffffff;
 }
 
-.description {
-  font-size: 0.9rem;
-  color: #cccccc;
-  margin-bottom: 16px;
-}
-
 .input-group {
   display: flex;
   flex-direction: column;
@@ -53,16 +48,16 @@ h1 {
 
 .input-group.toggle-group {
   display: flex;
-  flex-direction: row; /* align horizontally */
-  align-items: center; /* vertical alignment */
-  justify-content: flex-start; /* align to left */
-  gap: 8px; /* space between checkbox and label */
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .input-group.toggle-group label {
-  margin: 0; /* remove bottom margin */
+  margin: 0;
   font-size: 0.85rem;
   color: #bbbbbb;
   cursor: pointer;
@@ -85,8 +80,6 @@ input[type='number'] {
   color: #fff;
   text-align: center;
   outline: none;
-
-  /* Remove up/down arrows (spinners) */
   -moz-appearance: textfield;
 }
 
@@ -108,22 +101,16 @@ button {
   font-size: 1rem;
   color: #ffffff;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.8s ease, color 0.8s ease; /* smooth transition */
   width: 100%;
+  margin-bottom: 0;
 }
 
 button:hover {
   background-color: #0e8b6e;
 }
 
-#statusMsg {
-  margin-top: 10px;
-  font-size: 0.85rem;
+button.swap-color {
+  background-color: #ffffff;
   color: #10a37f;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-#statusMsg.visible {
-  opacity: 1;
 }

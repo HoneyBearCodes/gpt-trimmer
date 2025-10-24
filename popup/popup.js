@@ -1,31 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
   const keepInput = document.getElementById('keepValue');
   const saveBtn = document.getElementById('saveBtn');
-  const statusMsg = document.getElementById('statusMsg');
   const trimOnLoadToggle = document.getElementById('trimOnLoadToggle');
 
   const DEFAULT_KEEP = 20;
 
+  // Initialize input value from storage
   chrome.storage.sync.get(['KEEP'], (result) => {
     const keepVal = result.KEEP ?? DEFAULT_KEEP;
     keepInput.value = keepVal;
   });
 
+  // Save button click
   saveBtn.addEventListener('click', () => {
     const newValue = parseInt(keepInput.value, 10);
+
     if (isNaN(newValue) || newValue < 1) {
-      statusMsg.textContent = 'Please enter a valid number.';
-      statusMsg.classList.add('visible');
+      // Invalid input: temporarily swap text and colors
+      saveBtn.textContent = 'Invalid!';
+      saveBtn.classList.add('swap-color');
+      setTimeout(() => {
+        saveBtn.textContent = 'Save';
+        saveBtn.classList.remove('swap-color');
+      }, 800);
       return;
     }
 
+    // Valid input: save and show Done! animation
     chrome.storage.sync.set({ KEEP: newValue }, () => {
-      statusMsg.textContent = `Changes saved!`;
-      statusMsg.classList.add('visible');
-      setTimeout(() => statusMsg.classList.remove('visible'), 2500);
+      saveBtn.textContent = 'Done!';
+      saveBtn.classList.add('swap-color');
+      setTimeout(() => {
+        saveBtn.textContent = 'Save';
+        saveBtn.classList.remove('swap-color');
+      }, 800);
     });
   });
 
+  // Initialize toggle
   chrome.storage.sync.get({ trimOnLoad: true }, ({ trimOnLoad }) => {
     trimOnLoadToggle.checked = trimOnLoad;
   });
