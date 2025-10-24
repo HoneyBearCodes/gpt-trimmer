@@ -133,7 +133,7 @@
         setTimeout(() => toast.remove(), 220);
       }, duration);
     } catch (err) {
-      console.warn('GPTTrimmer toast error', err);
+      console.warn('GPT Trimmer toast error', err);
     }
   }
 
@@ -156,7 +156,7 @@
       }
       return false;
     } catch (err) {
-      console.error('GPTTrimmer: Notification failed', err);
+      console.error('GPT Trimmer: Notification failed', err);
       return false;
     }
   }
@@ -195,8 +195,8 @@
       const msg = `Trimmed to last ${KEEP} messages (removed ${toRemove}).`;
       if (!(await tryNotify(msg))) showToast(msg);
     } catch (err) {
-      console.error('GPTTrimmer trimming failed', err);
-      showToast('GPTTrimmer: Error trimming chat — see console.');
+      console.error('GPT Trimmer trimming failed', err);
+      showToast('GPT Trimmer: Error trimming chat — see console.');
     }
   }
 

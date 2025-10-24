@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "GPTTrimmer",
+  "name": "GPT Trimmer",
   "description": "Trim old ChatGPT messages — keeps only the last N conversation turns (default 20).",
   "version": "1.0.0",
   "permissions": ["storage", "notifications"],
   "host_permissions": ["https://chatgpt.com/*"],
   "action": {
-    "default_title": "GPTTrimmer Settings",
+    "default_title": "GPT Trimmer Settings",
     "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "icons/icon16.png",

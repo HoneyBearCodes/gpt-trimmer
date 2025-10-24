@@ -1,4 +1,4 @@
-# ✂️ GPTTrimmer
+# ✂️ GPT Trimmer
 
 ***Keep your ChatGPT running smooth — automatically trim long conversations and boost performance.***
 
