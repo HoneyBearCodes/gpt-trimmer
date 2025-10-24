@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "GPTTrimmer",
+  "description": "Trim old ChatGPT messages — keeps only the last N conversation turns (default 20).",
+  "version": "1.0.0",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*"
+  ],
+  "action": {
+    "default_title": "GPTTrimmer"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["content_script.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}
