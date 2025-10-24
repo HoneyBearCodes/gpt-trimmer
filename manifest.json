@@ -3,12 +3,8 @@
   "name": "GPTTrimmer",
   "description": "Trim old ChatGPT messages — keeps only the last N conversation turns (default 20).",
   "version": "1.0.0",
-  "permissions": [
-    "storage", "notifications"
-  ],
-  "host_permissions": [
-    "https://chatgpt.com/*"
-  ],
+  "permissions": ["storage", "notifications"],
+  "host_permissions": ["https://chatgpt.com/*"],
   "action": {
     "default_title": "GPTTrimmer Settings",
     "default_popup": "popup/popup.html",
@@ -31,12 +27,12 @@
     }
   ],
   "web_accessible_resources": [
-  {
-    "resources": ["icons/*.png"],
-    "matches": ["https://chatgpt.com/*"]
+    {
+      "resources": ["icons/*.png"],
+      "matches": ["https://chatgpt.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "service_worker.js"
   }
-],
-"background": {
-  "service_worker": "service_worker.js"
-}
 }

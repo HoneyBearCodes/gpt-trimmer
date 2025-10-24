@@ -14,6 +14,7 @@
 
   if (document.getElementById(ROOT_ID)) return;
 
+  // ---- Create Shadow DOM host ----
   const host = document.createElement('div');
   host.id = ROOT_ID;
   host.style.all = 'initial';
@@ -26,11 +27,10 @@
 
   const shadow = host.attachShadow({ mode: 'open' });
 
+  // ---- Shadow DOM Styles ----
   const style = document.createElement('style');
   style.textContent = `
-    :host {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
+    :host { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
     .gpttrimmer-fab {
       pointer-events: auto;
       width: 56px;
@@ -74,12 +74,12 @@
   container.className = 'gpttrimmer-root';
   Object.assign(container.style, {
     position: 'relative',
-    display: 'inline-block'
+    display: 'inline-block',
   });
 
   const fab = document.createElement('img');
   fab.className = 'gpttrimmer-fab';
-  fab.src = chrome.runtime.getURL('icons/icon128.png'); // Load from extension package
+  fab.src = chrome.runtime.getURL('icons/icon128.png');
   fab.alt = 'Trim Chat';
   fab.tabIndex = 0;
 
@@ -91,9 +91,16 @@
   shadow.appendChild(style);
   shadow.appendChild(container);
 
-  host.addEventListener('mouseenter', () => (host.style.pointerEvents = 'auto'));
-  host.addEventListener('mouseleave', () => (host.style.pointerEvents = 'none'));
+  host.addEventListener(
+    'mouseenter',
+    () => (host.style.pointerEvents = 'auto')
+  );
+  host.addEventListener(
+    'mouseleave',
+    () => (host.style.pointerEvents = 'none')
+  );
 
+  // ---- Utilities ----
   function showToast(message, options = {}) {
     try {
       const id = 'gpttrimmer-toast-v1';
@@ -115,7 +122,7 @@
         zIndex: 2147483646,
         fontSize: '13px',
         opacity: '0',
-        transition: 'opacity 0.2s ease'
+        transition: 'opacity 0.2s ease',
       });
       document.body.appendChild(toast);
       requestAnimationFrame(() => (toast.style.opacity = '1'));
@@ -134,7 +141,10 @@
     try {
       if (!('Notification' in window)) return false;
       if (Notification.permission === 'granted') {
-        new Notification(message);
+        new Notification('GPT Trimmer', {
+          body: message,
+          icon: chrome.runtime.getURL('icons/icon128.png'),
+        });
         return true;
       }
       if (Notification.permission === 'default') {
@@ -179,18 +189,28 @@
         return;
       }
 
-      const toRemove = Math.max(0, total - KEEP);
-      for (let i = 0; i < toRemove; i++) {
-        turns[i]?.remove();
-        removed++;
-      }
+      const toRemove = total - KEEP;
+      for (let i = 0; i < toRemove; i++) turns[i]?.remove();
 
-      const msg = `Trimmed to last ${KEEP} messages (removed ${removed}).`;
+      const msg = `Trimmed to last ${KEEP} messages (removed ${toRemove}).`;
       if (!(await tryNotify(msg))) showToast(msg);
     } catch (err) {
       console.error('GPTTrimmer trimming failed', err);
       showToast('GPTTrimmer: Error trimming chat — see console.');
     }
+  }
+
+  function waitForChatTurns(timeout = 5000, interval = 200) {
+    return new Promise((resolve) => {
+      const start = Date.now();
+      const check = () => {
+        const turns = document.querySelectorAll(TURN_SELECTOR);
+        if (turns.length > 0) resolve(turns);
+        else if (Date.now() - start > timeout) resolve([]);
+        else setTimeout(check, interval);
+      };
+      check();
+    });
   }
 
   async function updateTooltip() {
@@ -199,18 +219,32 @@
     label.textContent = `Trim Chat (keep last ${KEEP})`;
   }
 
-  // Initial tooltip setup
+  // ---- Trim on page load only if toggle is ON ----
+  chrome.storage.sync.get({ trimOnLoad: true }, ({ trimOnLoad }) => {
+    if (trimOnLoad) {
+      waitForChatTurns(8000, 300).then((turns) => {
+        if (turns.length > 0) trimConversation();
+      });
+    }
+  });
+
+  // ---- Tooltip ----
   updateTooltip();
 
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area === 'sync' && changes.KEEP) updateTooltip();
   });
 
+  // ---- FAB Click ----
   fab.addEventListener('click', (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
     fab.animate(
-      [{ transform: 'scale(1)' }, { transform: 'scale(0.96)' }, { transform: 'scale(1)' }],
+      [
+        { transform: 'scale(1)' },
+        { transform: 'scale(0.96)' },
+        { transform: 'scale(1)' },
+      ],
       { duration: 160 }
     );
     trimConversation();
@@ -223,6 +257,6 @@
     }
   });
 
-  // Expose helper in global (optional)
-  window.__GPTTRIMMER = { trimNow: trimConversation, version: '1.1.0' };
+  // ---- Expose helper ----
+  window.__GPTTRIMMER = { trimNow: trimConversation, version: '1.1.1' };
 })();

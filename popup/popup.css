@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   background-color: #181818;
   color: #ffffff;
   width: 280px;
@@ -51,14 +51,31 @@ h1 {
   box-sizing: border-box;
 }
 
+.input-group.toggle-group {
+  display: flex;
+  flex-direction: row; /* align horizontally */
+  align-items: center; /* vertical alignment */
+  justify-content: flex-start; /* align to left */
+  gap: 8px; /* space between checkbox and label */
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.input-group.toggle-group label {
+  margin: 0; /* remove bottom margin */
+  font-size: 0.85rem;
+  color: #bbbbbb;
+  cursor: pointer;
+}
+
 label {
   margin-bottom: 6px;
   font-size: 0.85rem;
   color: #bbbbbb;
-  align-self: flex-start; 
+  align-self: flex-start;
 }
 
-input[type="number"] {
+input[type='number'] {
   width: 94%;
   padding: 8px;
   font-size: 1rem;
@@ -73,13 +90,13 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"]:focus {
+input[type='number']:focus {
   border-color: #10a37f;
 }
 
