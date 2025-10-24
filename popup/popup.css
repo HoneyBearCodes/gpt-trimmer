@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: #181818;
+  color: #ffffff;
+  width: 280px;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #cccccc;
+  margin-bottom: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+label {
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: #bbbbbb;
+  align-self: flex-start; 
+}
+
+input[type="number"] {
+  width: 94%;
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: #202020;
+  color: #fff;
+  text-align: center;
+  outline: none;
+
+  /* Remove up/down arrows (spinners) */
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"]:focus {
+  border-color: #10a37f;
+}
+
+button {
+  background-color: #10a37f;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #0e8b6e;
+}
+
+#statusMsg {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #10a37f;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#statusMsg.visible {
+  opacity: 1;
+}
