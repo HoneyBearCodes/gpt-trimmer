@@ -1,8 +1,8 @@
 # <img src="docs/banner.png" height="128" />
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](#)
-![Repo size](https://img.shields.io/github/repo-size/HoneyBearCodes/gpt-trimmer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue)](#)
+![Lines of code](https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/HoneyBearCodes/gpt-trimmer/badge?match=.js$,.css$,.html$,.json$,popup/&style=flat&color=blueviolet&label=Lines%20of%20Code)
 
 **Keep your ChatGPT conversations smooth, responsive, and clutter-free!**
 
