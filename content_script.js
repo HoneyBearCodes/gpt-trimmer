@@ -22,7 +22,9 @@
   host.style.zIndex = '2147483647';
   host.style.bottom = '18px';
   host.style.right = '18px';
-  host.style.pointerEvents = 'none';
+  host.style.pointerEvents = 'auto'; // always hoverable
+  host.style.opacity = '1';
+  host.style.transition = 'opacity 0.3s ease'; // smooth fade
   document.documentElement.appendChild(host);
 
   const shadow = host.attachShadow({ mode: 'open' });
@@ -91,14 +93,28 @@
   shadow.appendChild(style);
   shadow.appendChild(container);
 
-  host.addEventListener(
-    'mouseenter',
-    () => (host.style.pointerEvents = 'auto')
-  );
-  host.addEventListener(
-    'mouseleave',
-    () => (host.style.pointerEvents = 'none')
-  );
+  // ---- Auto-hide FAB ----
+  let hideTimeout;
+  const HIDE_DELAY = 4000;
+
+  function showFAB() {
+    host.style.opacity = '1';
+    clearTimeout(hideTimeout);
+    hideTimeout = setTimeout(hideFAB, HIDE_DELAY);
+  }
+
+  function hideFAB() {
+    host.style.opacity = '0.05'; // almost invisible but hoverable
+  }
+
+  // Start auto-hide timer
+  hideTimeout = setTimeout(hideFAB, HIDE_DELAY);
+
+  // Fade in on hover
+  host.addEventListener('mouseenter', showFAB);
+  host.addEventListener('mouseleave', () => {
+    hideTimeout = setTimeout(hideFAB, HIDE_DELAY);
+  });
 
   // ---- Utilities ----
   function showToast(message, options = {}) {
