@@ -1,38 +1,61 @@
 {
   "manifest_version": 3,
   "name": "GPT Trimmer",
-  "description": "Trim old ChatGPT messages — keeps only the last N conversation turns (default 20).",
   "version": "1.0.0",
-  "permissions": ["storage", "notifications"],
-  "host_permissions": ["https://chatgpt.com/*"],
+  "description": "Keep your ChatGPT conversations smooth, responsive, and clutter-free!",
+  "author": "Shashank Singh",
+  "homepage_url": "https://github.com/HoneyBearCodes/gpt-trimmer",
+  "minimum_chrome_version": "116",
+  "offline_enabled": true,
+
+  "permissions": [
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*"
+  ],
+
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+
   "action": {
     "default_title": "GPT Trimmer Settings",
     "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
-      "48": "icons/icon48.png"
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
     }
   },
+
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+
   "content_scripts": [
     {
-      "matches": ["https://chatgpt.com/*"],
-      "js": ["content_script.js"],
-      "run_at": "document_idle",
-      "all_frames": false
+      "matches": [
+        "https://chatgpt.com/*"
+      ],
+      "js": [
+        "content_script.js"
+      ],
+      "run_at": "document_idle"
     }
   ],
+
   "web_accessible_resources": [
     {
-      "resources": ["icons/*.png"],
-      "matches": ["https://chatgpt.com/*"]
+      "resources": [
+        "icons/*.png"
+      ],
+      "matches": [
+        "https://chatgpt.com/*"
+      ]
     }
-  ],
-  "background": {
-    "service_worker": "service_worker.js"
-  }
+  ]
 }

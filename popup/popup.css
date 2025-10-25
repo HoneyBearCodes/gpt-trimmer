@@ -1,36 +1,61 @@
-body {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Base */
+body.popup {
   margin: 0;
   font-family: 'Inter', system-ui, sans-serif;
   background-color: #181818;
   color: #ffffff;
   width: 280px;
-  padding: 16px 16px 0 16px;
+  padding: 16px;
   border-radius: 12px;
+  box-sizing: border-box;
 }
 
-.popup-container {
+.popup__container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.header {
+/* Header */
+.popup__header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-between; /* left and right alignment */
-  gap: 8px;
-  margin-bottom: 24px;
   width: 100%;
+  margin-bottom: 24px;
+  gap: 8px;
 }
 
-.header-left {
+.popup__header-left {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.github-logo {
+.popup__logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.popup__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.popup__github-link {
+  display: flex;
+}
+
+.popup__github-logo {
   width: 24px;
   height: 24px;
   border-radius: 4px;
@@ -38,58 +63,45 @@ body {
   transition: transform 0.2s ease;
 }
 
-.github-logo:hover {
+.popup__github-logo:hover {
   transform: scale(1.1);
 }
 
-.logo {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-}
-
-h1 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0;
-  color: #ffffff;
-}
-
-.input-group {
+/* Form */
+.popup__form {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
-  margin-bottom: 16px;
-  box-sizing: border-box;
 }
 
-.input-group.toggle-group {
+.popup__form-group {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.popup__form-group--toggle {
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
   gap: 8px;
-  width: 100%;
   margin-bottom: 12px;
 }
 
-.input-group.toggle-group label {
-  margin: 0;
+.popup__label {
   font-size: 0.85rem;
   color: #bbbbbb;
+  margin-bottom: 6px;
+}
+
+.popup__label--checkbox {
+  margin-bottom: 0;
   cursor: pointer;
 }
 
-label {
-  margin-bottom: 6px;
-  font-size: 0.85rem;
-  color: #bbbbbb;
-  align-self: flex-start;
-}
-
-input[type='number'] {
-  width: 94%;
+.popup__input {
+  width: 100%;
   padding: 8px;
   font-size: 1rem;
   border-radius: 8px;
@@ -98,37 +110,52 @@ input[type='number'] {
   color: #fff;
   text-align: center;
   outline: none;
-  -moz-appearance: textfield;
+  appearance: textfield;
+  transition: border-color 0.2s ease;
 }
 
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
+.popup__input::-webkit-outer-spin-button,
+.popup__input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type='number']:focus {
+.popup__input:focus {
   border-color: #10a37f;
 }
 
-button {
-  background-color: #10a37f;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #ffffff;
+.popup__checkbox {
+  width: auto;
+  height: auto;
   cursor: pointer;
-  transition: background-color 0.8s ease, color 0.8s ease; /* smooth transition */
-  width: 100%;
-  margin-bottom: 0;
 }
 
-button:hover {
+/* Button */
+.popup__button {
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #10a37f;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.popup__button:hover {
   background-color: #0e8b6e;
 }
 
-button.swap-color {
+.popup__button--swap {
   background-color: #ffffff;
   color: #10a37f;
+}
+
+/* Status message */
+.popup__status {
+  font-size: 0.85rem;
+  color: #bbbbbb;
+  margin-top: 8px;
+  text-align: center;
 }

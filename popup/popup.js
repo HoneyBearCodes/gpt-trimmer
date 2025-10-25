@@ -1,48 +1,64 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const keepInput = document.getElementById('keepValue');
-  const saveBtn = document.getElementById('saveBtn');
-  const trimOnLoadToggle = document.getElementById('trimOnLoadToggle');
+  const keepMessagesInput = document.getElementById('keepValue');
+  const saveButton = document.getElementById('saveBtn');
+  const trimOnLoadCheckbox = document.getElementById('trimOnLoadToggle');
+  const statusMessage = document.getElementById('statusMsg');
 
-  const DEFAULT_KEEP = 20;
+  const DEFAULT_MESSAGES_TO_KEEP = 20;
+  const STATUS_FEEDBACK_DURATION = 800;
 
-  // Initialize input value from storage
-  chrome.storage.sync.get(['KEEP'], (result) => {
-    const keepVal = result.KEEP ?? DEFAULT_KEEP;
-    keepInput.value = keepVal;
-  });
+  /**
+   * Utility: Display temporary feedback on the save button
+   * @param {string} message - Text to display
+   * @param {boolean} isError - Whether this is an error state
+   */
+  const showSaveFeedback = (message, isError = false) => {
+    saveButton.textContent = message;
+    saveButton.classList.toggle('popup__button--swap', isError || message === 'Done!');
+    setTimeout(() => {
+      saveButton.textContent = 'Save';
+      saveButton.classList.remove('popup__button--swap');
+    }, STATUS_FEEDBACK_DURATION);
+  };
 
-  // Save button click
-  saveBtn.addEventListener('click', () => {
-    const newValue = parseInt(keepInput.value, 10);
+  /**
+   * Load the current settings from chrome.storage
+   */
+  const loadSettings = async () => {
+    const { KEEP = DEFAULT_MESSAGES_TO_KEEP, trimOnLoad = true } =
+      await chrome.storage.sync.get(['KEEP', 'trimOnLoad']);
 
-    if (isNaN(newValue) || newValue < 1) {
-      // Invalid input: temporarily swap text and colors
-      saveBtn.textContent = 'Invalid!';
-      saveBtn.classList.add('swap-color');
-      setTimeout(() => {
-        saveBtn.textContent = 'Save';
-        saveBtn.classList.remove('swap-color');
-      }, 800);
+    keepMessagesInput.value = KEEP;
+    trimOnLoadCheckbox.checked = trimOnLoad;
+  };
+
+  /**
+   * Save the number of messages to keep
+   */
+  const saveKeepMessages = async () => {
+    const newKeepValue = parseInt(keepMessagesInput.value, 10);
+
+    if (isNaN(newKeepValue) || newKeepValue < 1) {
+      showSaveFeedback('Invalid!', true);
       return;
     }
 
-    // Valid input: save and show Done! animation
-    chrome.storage.sync.set({ KEEP: newValue }, () => {
-      saveBtn.textContent = 'Done!';
-      saveBtn.classList.add('swap-color');
-      setTimeout(() => {
-        saveBtn.textContent = 'Save';
-        saveBtn.classList.remove('swap-color');
-      }, 800);
-    });
-  });
+    await chrome.storage.sync.set({ KEEP: newKeepValue });
+    showSaveFeedback('Done!');
+  };
 
-  // Initialize toggle
-  chrome.storage.sync.get({ trimOnLoad: true }, ({ trimOnLoad }) => {
-    trimOnLoadToggle.checked = trimOnLoad;
-  });
+  /**
+   * Update the trim-on-load preference
+   */
+  const updateTrimOnLoadSetting = async (event) => {
+    const isChecked = event.target.checked;
+    await chrome.storage.sync.set({ trimOnLoad: isChecked });
+  };
 
-  trimOnLoadToggle.addEventListener('change', () => {
-    chrome.storage.sync.set({ trimOnLoad: trimOnLoadToggle.checked });
-  });
+  // Event listeners
+  saveButton.addEventListener('click', saveKeepMessages);
+  trimOnLoadCheckbox.addEventListener('change', updateTrimOnLoadSetting);
+
+  // Initialize the popup
+  loadSettings();
 });
