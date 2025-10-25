@@ -2,72 +2,83 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue)](#)
-![Lines of code](https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/HoneyBearCodes/gpt-trimmer/badge?match=.js$,.css$,.html$,.json$,popup/&style=flat&color=blueviolet&label=Lines%20of%20Code)
+![Lines of code](https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/HoneyBearCodes/gpt-trimmer/badge?match=.js$,.css$,.html$,.json$,popup/\&style=flat\&color=blueviolet\&label=Lines%20of%20Code)
 
 **Keep your ChatGPT conversations smooth, responsive, and clutter-free!**
 
-GPT Trimmer is a lightweight browser extension that trims old messages in ChatGPT, making your long conversations lag-free without interfering with your workflow.
+GPT Trimmer is a lightweight browser extension that **trims old messages in ChatGPT**, making long conversations lag-free without interfering with your workflow.
 
-## 🌟 Features
+## ✨ Features
 
-- **Trim Old Messages Instantly**
-  A sleek trim button at the bottom-right of the screen lets you remove old messages up to your set threshold.
-
-- **Customizable Message Limit**
-  Set the number of messages to keep via the extension icon. Each user input and ChatGPT response counts as one message.
-
-- **Auto-Trim on Page Load**
-  Enable auto-trim to automatically delete older messages when the page loads, keeping your chat smooth at all times.
-
-- **Non-Intrusive UI**
-  The trim button is designed to stay out of your way while still being easily accessible.
-
-- **Notifications**
-  GPT Trimmer features banner notifications for trimming actions. If the user grants notification permissions, it can also send system notifications to alert you when messages are trimmed.
+* GPT Trimmer trims old messages to keep long ChatGPT conversations responsive.
+* You can set the number of messages to keep.
+* Auto-trim can be enabled to automatically remove messages that exceed your threshold on page load.
+* The trim button is small and unobtrusive, staying out of your way.
+* The extension shows banner notifications and can send system notifications if allowed.
 
 ## 🎬 Demo
 
 ![Demo GIF](docs/demo.gif)
 
-## ⚡ How It Works
+## 🔍 How It Works
 
 1. Install GPT Trimmer as a browser extension.
 2. Set your preferred message limit via the extension icon.
-3. Click the trim button to remove old messages or enable auto-trim for automatic cleanup.
-4. Allow notifications to receive system alerts when trimming occurs.
+3. Click the trim button or enable auto-trim for automatic cleanup.
+4. Enable notifications to receive system alerts when trimming occurs.
 
-> **Note:** Messages are counted individually:
->
-> - User prompt = 1 message
-> - ChatGPT response = 1 message
-
-So, one exchange equals **2 messages**.
+> **Note:** Each user prompt and ChatGPT response counts as **1 message**.
+> One exchange equals **2 messages**.
 
 ## 🔧 Installation
 
-1. Clone or download the repository:
+**Option 1: Clone the repository**
 
-   ```bash
-   git clone https://github.com/HoneyBearCodes/gpt-trimmer.git
-   ```
+```bash
+git clone https://github.com/HoneyBearCodes/gpt-trimmer.git
+```
 
-2. Open Chrome/Edge/Brave → Extensions → Load unpacked → Select the project folder.
-3. Set your message threshold and enjoy a faster ChatGPT experience!
-4. Optionally, enable notifications for system alerts.
+**Option 2: Download release ZIP**
+Download `gpt-trimmer-v1.0.0.zip` and extract it.
 
-## 💡 Why Use GPT Trimmer?
+**Load in browser:**
 
-Long conversations in ChatGPT can make scrolling laggy or unresponsive. GPT Trimmer keeps your chat history lightweight and optimized, giving you a smooth, uninterrupted workflow—now with optional system notifications to keep you informed.
+1. Open Chrome, Edge, or Brave → `chrome://extensions`.
+2. Enable **Developer mode** (top-right).
+3. Click **Load unpacked** → select the extension folder.
+4. Set your message threshold and optionally enable notifications.
+
+## 🛡️ Compliance and Safety
+
+GPT Trimmer is **entirely client-side** and modifies only the ChatGPT UI:
+
+* **No prompts or responses are altered**; no extra data is sent to OpenAI.
+* **All operations occur locally** in the user’s browser.
+* The extension does not circumvent usage limits or access controls.
+
+This design ensures GPT Trimmer is **harmless, fully client-side, and compliant** with OpenAI’s architecture.
 
 ## 🤝 Contributing
 
 Contributions, suggestions, or bug reports are welcome!
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
+1. Fork the repository.
+2. Create a feature branch:
+
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Commit your changes:
+
+   ```bash
+   git commit -m 'Add new feature'
+   ```
+4. Push the branch:
+
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Open a Pull Request.
 
 ## 📄 License
 
