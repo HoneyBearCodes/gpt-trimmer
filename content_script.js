@@ -150,7 +150,10 @@
       if (Notification.permission === 'default') {
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
-          new Notification(message);
+          new Notification('GPT Trimmer', {
+            body: message,
+            icon: chrome.runtime.getURL('icons/icon128.png'),
+          });
           return true;
         }
       }
